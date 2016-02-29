@@ -1,2 +1,2 @@
 # framework
-A pocket-size  framework,make by itchin.
+A pocket-size  framework make by itchin.
