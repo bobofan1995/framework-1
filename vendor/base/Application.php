@@ -44,8 +44,6 @@ class Application{
 	public function Configure(&$config){
 		$defaultConfig = include(VENDOR_PATH . '/data.php');
 		foreach ($config as $key => $cfg) {
-			if (empty($cfg)) 
-				continue;
 
 			if (is_array($cfg)) {
 				if (isset($defaultConfig[$key])) 
@@ -71,9 +69,8 @@ class Application{
 					
 				else
 					$defaultConfig[$key] = $cfg;
-			}elseif(is_string($cfg)) {
+			}else
 				$defaultConfig[$key] = $cfg;
-			}
 				
 		}
 		$this->config = $defaultConfig;
