@@ -29,6 +29,10 @@ class Upload {
 		$this->error = $file['error'];
 	}
 
+	public static function model($file){
+		return new Upload($file);
+	}
+
 	/**
 	 * 设置上传文件的最大体积(KB)
 	 */
