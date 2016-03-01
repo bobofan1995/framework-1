@@ -30,7 +30,8 @@ class Upload {
 	}
 
 	public static function model($file){
-		return new Upload($file);
+		$className = get_called_class();
+		return new $className($file);
 	}
 
 	/**
