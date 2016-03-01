@@ -88,6 +88,6 @@ class Upload {
 
 		$file = $uploadPath . $this->name .'.'. $this->type;
 		echo $file,' ',$this->tmp_name;
-		move_uploaded_file($this->tmp_name, $file);
+		return move_uploaded_file($this->tmp_name, $file);
 	}
 }
