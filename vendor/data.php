@@ -17,7 +17,8 @@ return [
 		'DB' => '/db',
 		'DBCommand'	=> '/db',
 		'DBException' => '/exception',
-		'Middleware' => APP_PATH . '/component/Middleware.php'
+		'Middleware' => APP_PATH . '/component/Middleware.php',
+		'Upload' => '/component'
 	],
 
 	'classFolder' => [
