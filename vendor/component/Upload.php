@@ -79,14 +79,14 @@ class Upload {
 	 * 保存目录不存在时会自动创建该目录
 	 */
 	public function save($path = '', $isFullPath = false){
-		if ($this->error > 0 || $this->size > $this->maxSize || !($this->allowType != null && in_array($this->type, explode(',', $this->allowType))) ) {
+		if ($this->error > 0 || $this->size > $this->maxSize || ($this->allowType != null && !in_array($this->type, explode(',', $this->allowType)))) 
 			return false;
-		}
 
 		if ($isFullPath)
 			$uploadPath = $path;
 		else
 			$uploadPath = APP_PATH . '/' . trim($path,'/') . '/';
+		
 		if (!file_exists($uploadPath)) {
 			mkdir($uploadPath);
 		}
