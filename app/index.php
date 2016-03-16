@@ -1,4 +1,5 @@
 <?php
+define('DEBUG', true);
 define('APP_PATH', dirname(__DIR__));
 define('VENDOR_PATH', APP_PATH.'/vendor');
 
