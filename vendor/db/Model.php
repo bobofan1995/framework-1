@@ -216,7 +216,7 @@ class Model {
 		$valuesStr .= '("'.implode('","', $values).'"),';
 		
 		$sql = 'INSERT INTO `'.DB::fullTableName(static::className()).'`('.$str.') VALUES '.rtrim($valuesStr,',');
-		return DB::getDb()->exec($sql);
+		return DB::PDOExecInfo(DB::getDb()->exec($sql));
 	}
 
 	public static function del($condition = []){
@@ -224,7 +224,7 @@ class Model {
 		if ($condition != null) {
 			$sql .= ' WHERE '.DBCommand::condition($condition);
 		}
-		return DB::getDb()->exec($sql);
+		return DB::PDOExecInfo(DB::getDb()->exec($sql));
 	}
 
 	public static function update($fields, $condition = []){
@@ -240,7 +240,7 @@ class Model {
 		if ($condition != null) {
 			$sql .= ' WHERE '.DBCommand::condition($condition);
 		}
-		return DB::getDb()->exec($sql);
+		return DB::PDOExecInfo(DB::getDb()->exec($sql));
 	}
 
 
