@@ -21,6 +21,12 @@ class Upload {
 
 	public $tmp_name;
 
+	public $fullName;//上传文件的全名
+
+	public $file;//上传文件的站点相对路径+全名
+
+	public $fullPath;//上传的完整物理路径+命名
+
 	public function Upload($file){
 		$this->tmp_name = $file['tmp_name'];
 		$this->size = $file['size'] / 1024;
@@ -72,6 +78,29 @@ class Upload {
 	}
 
 	/**
+	 * 获取上传文件全名,save()动作后调用
+	 */
+	public function getFullName(){
+		return $this->name;
+	}
+
+	/**
+	 * 获取上传路径全名,save()动作后调用
+	 */
+	public function getFile(){
+		return $this->file;
+	}
+
+	/**
+	 * 删除本次上传(上传成功但插入数据库失败时可用，去除冗余文件数据)
+	 */
+	public function del(){
+		if (file_exists($this->fullPath)) {
+			unlink($this->fullPath);
+		}
+	}
+
+	/**
 	 * 保存上传文件
 	 * @param path string 保存目录
 	 * @param isFullPath boolean 默认为APP_PATH目录下的路径，为true时则是自定义路径
@@ -82,16 +111,25 @@ class Upload {
 		if ($this->error > 0 || $this->size > $this->maxSize || ($this->allowType != null && !in_array($this->type, explode(',', $this->allowType)))) 
 			return false;
 
+		$path = trim($path, '/');
+
 		if ($isFullPath)
 			$uploadPath = $path;
 		else
-			$uploadPath = APP_PATH . '/' . trim($path,'/') . '/';
+			$uploadPath = APP_PATH . '/' . $path . '/';
 		
 		if (!file_exists($uploadPath)) {
 			mkdir($uploadPath);
 		}
 
-		$file = $uploadPath . $this->name .'.'. $this->type;
-		return move_uploaded_file($this->tmp_name, $file);
+		$this->fullName = $this->name;
+		if ($this->type != null) {
+			$this->fullName .= '.'.$this->type;
+		}
+		$this->file = $path . '/' . $this->fullName;
+
+		$this->fullPath = $uploadPath . $this->fullName;
+
+		return move_uploaded_file($this->tmp_name, $this->fullPath);
 	}
 }
