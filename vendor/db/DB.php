@@ -36,6 +36,16 @@ class DB{
 		$value = DB::$relevances[$_table . '&' . $__table];
 		return DB::$table_prefix . $_table . '.' . $value[0] . '=' . DB::$table_prefix . $__table . '.' . $value[1];
 	}
+	
+	public function PDOExecInfo($result){
+		if ($result !== false) 
+			return $result;
+		elseif(DEBUG === true){
+			var_dump(DB::getDb()->errorInfo());
+			exit();
+		}else
+			return false;
+	}
 
 	// public static function selectPrefix($tableName, $select){
 	// 	$fullTableName = DB::$table_prefix . $tableName;
